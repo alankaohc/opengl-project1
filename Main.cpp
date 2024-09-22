@@ -107,11 +107,18 @@ int main()
 		 0.5f,  0.0f,  0.5f,  1.0f,  0.0f,  1.0f,
 		 0.5f,  0.0f, -0.5f,  1.0f,  0.0f,  1.0f,
 		 0.0f,  0.8f,  0.0f,  1.0f,  0.0f,  1.0f,
-		 
-
 	};
 
-	// Buffer ------------------------------------------------------
+	GLfloat vertices2[] =
+	{
+		-0.8f,  0.8f,  0.0f,  1.0f,  0.0f,  1.0f,
+		-0.8f,  0.0f,  0.0f,  1.0f,  0.0f,  1.0f,
+		 0.0f,  0.0f,  0.0f,  1.0f,  0.0f,  1.0f,
+
+		
+	};
+
+	// Buffer ---------------------------------------------------------
 	// 先宣告buffer的ID，也是無號整數，但和Shader Object 不同是，這裡將參考穿進函式修改，前者是回傳
 	GLuint VAO, VBO;
 	// 如同前面講的，傳參考。然後記得VAO要比VBO早generate !!!
@@ -131,6 +138,10 @@ int main()
 	// 要記得上面Attrib設完，還要加以下來enable它
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+
+	// 這裡GL_ARRAY_BUFFER 是VBO，所以裡面的東西被覆蓋掉了
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), vertices2, GL_STATIC_DRAW); 
+
 
 	// 以上就把Buffer裡的值都設定好了，安全起見，可以把Buffer和Vertex Array都bind到0，之後就不會不小心修改到
 	// 然後，這裡的順序很重要，先VBO 在 VAO !!!
@@ -190,7 +201,7 @@ int main()
 
 		
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 15);
+		glDrawArrays(GL_TRIANGLES, 0, 12);
 		glfwSwapBuffers(window);
 	 
 		
