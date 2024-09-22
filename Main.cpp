@@ -58,18 +58,26 @@ int main()
 	
 	
 	// Shader ------------------------------------------------------
+	// 創造Vertex Shader Object，得到它的reference，也就是一個無號整數，感覺像和GPU要一個空間
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	// 將寫好的Vertex Shader Code(用GLSL寫的) 連結上 Vertex Shader Object
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+	// GPU 不會幫你compile，所以還要自己編譯成machine code
 	glCompileShader(vertexShader);
+	// 以下3行同理
 	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
 	glCompileShader(fragmentShader);
 	
+	// 創造 Shader Program Object，它也是給你一個編號
 	GLuint shaderProgram = glCreateProgram();
+	// 將之前創造好的Shader Objects 連結上 Shader Program
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
+	// 最後把Shader Program 裡的Shader Objects 打包成一個東西，我也不確定是不是這樣解釋?
 	glLinkProgram(shaderProgram);
 	
+	// 有了Shader Program，之前創造的Shader Objects就不需要了，可以把他們刪掉
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
@@ -104,19 +112,28 @@ int main()
 	};
 
 	// Buffer ------------------------------------------------------
+	// 先宣告buffer的ID，也是無號整數，但和Shader Object 不同是，這裡將參考穿進函式修改，前者是回傳
 	GLuint VAO, VBO;
+	// 如同前面講的，傳參考。然後記得VAO要比VBO早generate !!!
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
+
+	// 把VAO bind起來，指現在正在使用的Vertex Array Object
 	glBindVertexArray(VAO);
+	// 把VBO bind起來，有一些參數可以選，如GL_ARRAY_BUFFER，然後下一行就可以傳data給他
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
+	
+	// 這裡就是VAO 派上用場的地方，告訴GPU要如何解釋VBO 裡的值
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3*sizeof(float)));
 
+	// 要記得上面Attrib設完，還要加以下來enable它
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
+	// 以上就把Buffer裡的值都設定好了，安全起見，可以把Buffer和Vertex Array都bind到0，之後就不會不小心修改到
+	// 然後，這裡的順序很重要，先VBO 在 VAO !!!
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
@@ -144,7 +161,7 @@ int main()
 	{
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		
+		glUseProgram(shaderProgram);
 
 
 		// Timer
@@ -171,7 +188,7 @@ int main()
 
 
 
-		glUseProgram(shaderProgram);
+		
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 15);
 		glfwSwapBuffers(window);
