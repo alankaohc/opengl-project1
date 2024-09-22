@@ -1,0 +1,14 @@
+﻿  Main.cpp
+C:\Users\CGAL5\Documents\opengl\Project1\Project1\Libraries\include\GLFW\glfw3.h(3235,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失
+Main.obj : error LNK2019: 在函式 _glfwInit_main 中參考了無法解析的外部符號
+Main.obj : error LNK2019: 在函式 _glfwTerminate_main 中參考了無法解析的外部符號
+Main.obj : error LNK2019: 在函式 _glfwWindowHint_main 中參考了無法解析的外部符號
+Main.obj : error LNK2019: 在函式 _glfwCreateWindow_main 中參考了無法解析的外部符號
+Main.obj : error LNK2019: 在函式 _glfwDestroyWindow_main 中參考了無法解析的外部符號
+Main.obj : error LNK2019: 在函式 _glfwWindowShouldClose_main 中參考了無法解析的外部符號
+Main.obj : error LNK2019: 在函式 _glfwPollEvents_main 中參考了無法解析的外部符號
+Main.obj : error LNK2019: 在函式 _glfwGetTime_main 中參考了無法解析的外部符號
+Main.obj : error LNK2019: 在函式 _glfwMakeContextCurrent_main 中參考了無法解析的外部符號
+Main.obj : error LNK2019: 在函式 _glfwSwapBuffers_main 中參考了無法解析的外部符號
+C:\Users\CGAL5\Documents\opengl\Project1\Project1\Libraries\lib\glfw3.lib : warning LNK4272: 程式庫電腦類型 'x64' 與目標電腦類型 'x86' 發生衝突
+C:\Users\CGAL5\Documents\opengl\Project1\Project1\Debug\Project1.exe : fatal error LNK1120: 10 個無法解析的外部符號
